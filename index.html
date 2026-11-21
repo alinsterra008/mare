@@ -395,7 +395,7 @@ function abrir(i){E=i;var c=i>=0?S.D[i]:null;$("sh").textContent=c?"Editar clien
 function tema(m){var r=document.documentElement;if(m==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",m);Array.prototype.forEach.call($("tema").children,function(b){b.setAttribute("aria-pressed",b.dataset.m===m)});try{localStorage.setItem("mare-tema",m)}catch(e){}}
 function copiar(t,ok){try{navigator.clipboard.writeText(t).then(function(){toast(ok)},function(){toast("Não foi possível copiar aqui")})}catch(e){toast("Não foi possível copiar aqui")}}
 /* ===== CONFIGURAÇÃO: para ligar o modo real, cole a URL e a chave publishable (sb_publishable_...) do Supabase ===== */
-var CFG={SUPABASE_URL:"",SUPABASE_KEY:"",PRECO:19.90,NOME:"Maré Pro"};
+var CFG={SUPABASE_URL:"https://pvqykcgdyvcgmozfjiip.supabase.co",SUPABASE_KEY:"sb_publishable_tMbImmbypVljWoGYcPMgNg_1fqpuEK9",PRECO:19.90,NOME:"Maré Pro"};
 var sb=null;try{if(CFG.SUPABASE_URL&&CFG.SUPABASE_KEY&&window.supabase)sb=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_KEY)}catch(e){}
 var LIVE=!!sb,MODO="entrar";
 function prec(){return"R$ "+CFG.PRECO.toFixed(2).replace(".",",")}
