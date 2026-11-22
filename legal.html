@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Termos de Uso | Maré</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F6F5;--card:#fff;--ink:#0F2429;--mute:#5E757B;--line:#DAE5E3;--acc:#0A7F73;--accsoft:#D8F1EC;--warn:#A8690F;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#0A1517;--card:#122428;--ink:#E8F1EF;--mute:#90A9AF;--line:#213A40;--acc:#46D1BC;--accsoft:#143B3B;--warn:#E3AA5E;color-scheme:dark}}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 16px/1.7 "Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 20px 56px}
+.top{display:flex;justify-content:space-between;align-items:center;font-family:Fraunces,Georgia,serif;font-weight:700;font-size:22px}
+.top a{font:700 14px "Plus Jakarta Sans",system-ui,sans-serif;color:var(--acc)}
+.tabs{display:flex;gap:6px;margin:22px 0 6px;overflow-x:auto}
+.tabs a{flex:none;border:1px solid var(--line);border-radius:99px;padding:7px 15px;font-weight:700;font-size:14px;color:var(--mute);text-decoration:none}
+.tabs a[aria-current="page"]{background:var(--accsoft);color:var(--acc);border-color:var(--acc)}
+h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:34px;letter-spacing:-.03em;line-height:1.15;margin:24px 0 4px}
+h2{font-size:18px;font-weight:800;margin:30px 0 4px}
+p{margin:8px 0}
+ul{padding-left:20px;margin:8px 0}
+li{margin:6px 0}
+.up{color:var(--mute);font-size:14px}
+.aviso{border:1px solid var(--warn);color:var(--warn);border-radius:14px;padding:12px 14px;font-weight:700;font-size:14px;margin:16px 0}
+mark{background:color-mix(in srgb,var(--warn) 25%,transparent);color:inherit;border-radius:4px;padding:0 4px}
+footer{margin-top:48px;color:var(--mute);font-size:13px;text-align:center}
+a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><span>Maré</span><a href="./">Voltar ao Maré</a></div>
+<nav class="tabs" aria-label="Documentos">
+<a href="#termos" id="t-termos">Termos de Uso</a>
+<a href="#privacidade" id="t-privacidade">Política de Privacidade</a>
+</nav>
+<div id="doc"></div>
+<footer>© 2026 Maré. Todos os direitos reservados.</footer>
+</main>
+<script>
+/* ===== PREENCHA AQUI os dados do responsável pelo Maré (nome ou empresa, e-mail de contato e, se quiser, CPF ou CNPJ em DOC) ===== */
+var LEGAL={NOME:"Gabriel Rodrigues",DOC:"",EMAIL:"contatomarepro@gmail.com",ATUALIZADO:"22 de novembro de 2026"};
+
+var DOCS={
+termos:{t:"Termos de Uso",s:[
+["1. O serviço","<p>O Maré é um painel online para organizar clientes, planos, cobranças e métricas de negócios com mensalidade. Ele é oferecido por {NOME} ({DOC}), que pode ser contatado em {EMAIL}.</p><p>O Maré é uma ferramenta de organização. Ele não cobra os clientes do seu negócio, não movimenta o dinheiro deles e não substitui orientação contábil, fiscal ou jurídica.</p>"],
+["2. Sua conta","<p>Para usar o Maré você precisa criar uma conta com informações verdadeiras e ter capacidade legal para contratar. Você é responsável por manter sua senha em segurança e por tudo o que acontece na sua conta.</p>"],
+["3. Plano e pagamento","<p>O plano Maré Pro custa R$ 19,90 por mês. A cobrança é recorrente, feita no cartão por meio do Stripe, e renova automaticamente todo mês até você cancelar.</p><p>Se o preço mudar, avisaremos com pelo menos 30 dias de antecedência, e você poderá cancelar antes de a mudança valer.</p>"],
+["4. Cancelamento e reembolso","<p>Você cancela quando quiser na aba Planos, em Gerenciar assinatura. Depois do cancelamento, não há novas cobranças e o acesso continua até o fim do período já pago.</p><p>Se você contratou pela internet, pode desistir em até 7 dias a contar da contratação e receber o valor pago de volta, conforme o artigo 49 do Código de Defesa do Consumidor. Para isso, escreva para {EMAIL}.</p>"],
+["5. Uso permitido","<p>Você não pode usar o Maré para fins ilegais, tentar acessar dados de outras contas, burlar a cobrança, sobrecarregar o sistema ou revender o acesso sem autorização.</p>"],
+["6. Seus dados","<p>Os dados que você cadastra, como clientes, valores e cobranças, continuam sendo seus. Você é responsável por ter o direito de registrar esses dados no Maré. Você pode exportá-los a qualquer momento na aba Planos.</p>"],
+["7. Disponibilidade e responsabilidade","<p>Trabalhamos para manter o Maré no ar, mas não garantimos que ele funcione sem interrupções ou sem erros. Na máxima extensão permitida pela lei, nossa responsabilidade se limita ao valor que você pagou nos últimos 12 meses.</p><p>Nada nestes termos afasta direitos que a lei garante ao consumidor.</p>"],
+["8. Mudanças nestes termos","<p>Podemos atualizar estes termos. Quando a mudança for relevante, avisaremos por e-mail ou dentro do app. Continuar usando o Maré depois do aviso significa que você concorda com a nova versão.</p>"],
+["9. Lei aplicável e contato","<p>Estes termos seguem as leis do Brasil. Em caso de disputa, vale o foro do seu domicílio, quando você for consumidor. Dúvidas: {EMAIL}.</p>"]
+]},
+privacidade:{t:"Política de Privacidade",s:[
+["1. Quem é o responsável","<p>O controlador dos seus dados pessoais é {NOME} ({DOC}). Para falar sobre privacidade ou exercer seus direitos, escreva para {EMAIL}.</p>"],
+["2. Quais dados coletamos","<ul><li><b>Conta:</b> nome, e-mail e senha. A senha é guardada de forma protegida pelo provedor de login, e nós não a vemos.</li><li><b>Dados do painel:</b> o que você cadastra, como clientes, planos, valores e cobranças.</li><li><b>Pagamento:</b> o cartão é tratado pelo Stripe. Nós não guardamos o número do cartão, só o status da sua assinatura.</li><li><b>Dados técnicos:</b> registros básicos de acesso feitos pelos provedores, para segurança e funcionamento.</li></ul>"],
+["3. Para que usamos e em que base legal","<p>Usamos seus dados para criar e manter sua conta, mostrar seu painel, processar a assinatura, dar suporte e manter o serviço seguro. As bases legais são a execução do contrato, o cumprimento de obrigações legais e o nosso legítimo interesse em manter o serviço seguro.</p>"],
+["4. Com quem compartilhamos","<p>Usamos empresas que ajudam a operar o Maré: Supabase (login e armazenamento dos dados), Stripe (pagamentos) e GitHub Pages (hospedagem do site). Elas podem processar dados fora do Brasil, com as medidas de proteção previstas na LGPD. Nós não vendemos seus dados.</p>"],
+["5. Dados dos seus clientes","<p>Quando você cadastra dados dos seus clientes no Maré, é você quem decide o que registrar e por quê. Nós apenas guardamos e exibimos essas informações para você. Registre só o necessário e tenha base legal para isso.</p>"],
+["6. Por quanto tempo guardamos","<p>Guardamos os dados enquanto sua conta existir. Depois que você pedir a exclusão, apagamos os dados em prazo razoável, exceto o que formos obrigados a manter por lei, como registros fiscais de pagamentos.</p>"],
+["7. Seus direitos","<p>Pela LGPD, você pode pedir a confirmação do tratamento, o acesso, a correção, a anonimização, a portabilidade e a eliminação dos seus dados, além de informações sobre compartilhamento e a revogação do consentimento. Escreva para {EMAIL} e responderemos em prazo razoável.</p>"],
+["8. Segurança","<p>Usamos conexão criptografada e regras de acesso que impedem uma conta de ver os dados de outra. Nenhum sistema é totalmente imune a falhas. Se houver um incidente que afete seus dados, avisaremos conforme a lei.</p>"],
+["9. Cookies e armazenamento local","<p>Usamos o armazenamento do navegador para manter você conectado e lembrar a aparência que você escolheu. Não usamos cookies de publicidade nem rastreadores de terceiros.</p>"],
+["10. Mudanças","<p>Podemos atualizar esta política. A data da última atualização aparece no topo desta página.</p>"]
+]}};
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function fill(h){h=h.replace(/ \(\{DOC\}\)/g,LEGAL.DOC?" ("+esc(LEGAL.DOC)+")":"");return h.replace(/\{(\w+)\}/g,function(_,k){return LEGAL[k]?esc(LEGAL[k]):"<mark>[preencher "+k+"]</mark>"})}
+function show(){
+var k=location.hash==="#privacidade"?"privacidade":"termos",d=DOCS[k],inc=!LEGAL.NOME||!LEGAL.EMAIL;
+document.title=d.t+" | Maré";
+["termos","privacidade"].forEach(function(n){var a=document.getElementById("t-"+n);if(n===k)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+document.getElementById("doc").innerHTML="<h1>"+d.t+"</h1><p class=\"up\">Última atualização: "+LEGAL.ATUALIZADO+"</p>"+(inc?"<div class=\"aviso\">Este documento está incompleto: faltam os dados do responsável.</div>":"")+d.s.map(function(x){return"<h2>"+x[0]+"</h2>"+fill(x[1])}).join("");
+window.scrollTo(0,0)}
+window.addEventListener("hashchange",show);
+show();
+</script>
+</body>
+</html>

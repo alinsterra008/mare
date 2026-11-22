@@ -197,6 +197,8 @@ nav button{flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px
 #strip{margin-top:-46px}
 .toast{bottom:28px}
 }
+.rod a,.nt a{color:inherit;text-decoration:underline;font-weight:700}
+.rod a{margin:0 10px}
 </style>
 </head>
 <body class="gated">
@@ -234,7 +236,7 @@ nav button{flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px
 <button class="lk" id="aesq" type="button">Esqueci minha senha</button>
 <button class="lk" id="asub" type="button">Criar conta</button>
 </form>
-<p class="nt">Ao criar a conta, você concorda com os termos de uso e a política de privacidade.</p>
+<p class="nt">Ao criar a conta, você concorda com os <a href="legal.html#termos">Termos de Uso</a> e a <a href="legal.html#privacidade">Política de Privacidade</a>.</p>
 </div></section>
 <section class="gv" id="v-plano" hidden>
 <div class="hero gh s"><div class="wrap">
@@ -464,6 +466,7 @@ gate(false);init();conta();aba("1")}
 async function depois(u){USER=u;UID=u.id;var ok=false;try{ok=await API.assinatura()}catch(e){}if(ok)abrirApp();else mostrarPlano()}
 function ligarGate(){
 var PH='<b class="pn">'+CFG.NOME+'</b><div class="pv">'+prec()+'<small> por mês</small></div><ul><li>Clientes e planos sem limite</li><li>Cobranças, vencimentos e atrasos</li><li>Métricas de receita, meta e cancelamento</li><li>Dados salvos na sua conta, em qualquer aparelho</li><li>Cancele quando quiser</li></ul>';
+Array.prototype.forEach.call(document.querySelectorAll(".rod"),function(e){e.insertAdjacentHTML("beforeend",'<br><a href="legal.html#termos">Termos de Uso</a><a href="legal.html#privacidade">Política de Privacidade</a>')});
 Array.prototype.forEach.call(document.querySelectorAll(".plan"),function(e){e.innerHTML=PH});
 var W=document.querySelectorAll(".page .hero .waves"),L=document.querySelector(".page .brand svg");
 Array.prototype.forEach.call(document.querySelectorAll(".gh"),function(h){Array.prototype.forEach.call(W,function(w){h.insertBefore(w.cloneNode(true),h.firstChild)});var s=h.querySelector(".brand span");s.insertBefore(L.cloneNode(true),s.firstChild)});
