@@ -250,6 +250,20 @@ nav button{flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px
 <button class="go wide" id="assinar">Assinar</button>
 <p class="nt">Pagamento seguro pelo Stripe. Renova todo mês até você cancelar.</p>
 </div></section>
+<section class="gv" id="v-nova" hidden>
+<div class="hero gh s"><div class="wrap">
+<div class="brand"><span>Maré</span><button class="lk" id="nvolta" type="button">Voltar</button></div>
+<h1 class="wt">Nova senha</h1>
+<p class="ws">Escolha uma senha nova para a sua conta.</p>
+</div></div>
+<div class="wrap">
+<form id="nform" class="gp fm" novalidate style="margin-top:-30px;position:relative;z-index:2">
+<input id="nsenha" type="password" placeholder="Nova senha (mínimo 6 caracteres)" autocomplete="new-password" aria-label="Nova senha">
+<input id="nsenha2" type="password" placeholder="Repita a nova senha" autocomplete="new-password" aria-label="Repita a nova senha">
+<div class="err" id="nerr" role="alert"></div>
+<button class="go" id="nbtn" type="submit">Salvar nova senha</button>
+</form>
+</div></section>
 <footer class="rod">© 2026 Maré. Todos os direitos reservados.</footer>
 </div>
 <div class="page">
@@ -419,6 +433,7 @@ function tema(m){var r=document.documentElement;if(m==="auto")r.removeAttribute(
 function copiar(t,ok){try{navigator.clipboard.writeText(t).then(function(){toast(ok)},function(){toast("Não foi possível copiar aqui")})}catch(e){toast("Não foi possível copiar aqui")}}
 /* ===== CONFIGURAÇÃO: para ligar o modo real, cole a URL e a chave publishable (sb_publishable_...) do Supabase ===== */
 var CFG={SUPABASE_URL:"https://pvqykcgdyvcgmozfjiip.supabase.co",SUPABASE_KEY:"sb_publishable_tMbImmbypVljWoGYcPMgNg_1fqpuEK9",PRECO:19.90,NOME:"Maré Pro"};
+var REC=/type=recovery/.test(location.hash);
 var sb=null;try{if(CFG.SUPABASE_URL&&CFG.SUPABASE_KEY&&window.supabase)sb=window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_KEY)}catch(e){}
 var LIVE=!!sb,MODO="entrar";
 function prec(){return"R$ "+CFG.PRECO.toFixed(2).replace(".",",")}
@@ -450,15 +465,16 @@ gerenciar:async function(){
 if(LIVE){var r=await sb.functions.invoke("smart-function",{body:{acao:"portal",volta:location.href.split("#")[0]}});if(r.error||!r.data||!r.data.url)throw new Error("portal");location.href=r.data.url;return"live"}
 var c=lsGet("mare-contas")||{};c[USER.email].pro=false;lsSet("mare-contas",c);return"demo"},
 carregar:async function(){if(!LIVE)return null;var r=await sb.from("dashboards").select("dados").eq("user_id",USER.id).maybeSingle();return r.data&&r.data.dados},
-salvar:async function(d){if(LIVE)await sb.from("dashboards").upsert({user_id:USER.id,dados:d})}
+salvar:async function(d){if(LIVE)await sb.from("dashboards").upsert({user_id:USER.id,dados:d})},
+trocarSenha:async function(s){if(LIVE){var r=await sb.auth.updateUser({password:s});if(r.error)throw r.error;return}var c=lsGet("mare-contas")||{};if(c[USER.email]){c[USER.email].h=await hsh(USER.email+s);lsSet("mare-contas",c)}}
 };
 function erro(t){$("aerr").textContent=t}
-function traduz(t){t=t||"";return/Invalid login/i.test(t)?"E-mail ou senha incorretos.":/already registered/i.test(t)?"Este e-mail já tem conta.":/not confirmed/i.test(t)?"Confirme seu e-mail antes de entrar.":t||"Algo deu errado. Tente de novo."}
+function traduz(t){t=t||"";return/Invalid login/i.test(t)?"E-mail ou senha incorretos.":/already registered/i.test(t)?"Este e-mail já tem conta.":/not confirmed/i.test(t)?"Confirme seu e-mail antes de entrar.":/different from the old/i.test(t)?"A nova senha precisa ser diferente da anterior.":/at least/i.test(t)?"A senha precisa ter pelo menos 6 caracteres.":t||"Algo deu errado. Tente de novo."}
 function gate(on){document.body.classList.toggle("gated",on);window.scrollTo(0,0)}
-function vista(v){["welcome","auth","plano"].forEach(function(k){$("v-"+k).hidden=k!==v});window.scrollTo(0,0)}
+function vista(v){["welcome","auth","plano","nova"].forEach(function(k){$("v-"+k).hidden=k!==v});window.scrollTo(0,0)}
 function modo(m){MODO=m;var c=m==="criar";$("ah").textContent=c?"Criar conta":"Entrar";$("ahs").textContent=c?"Leva menos de um minuto.":"Acesse o painel do seu negócio.";$("anome").hidden=!c;$("aesq").hidden=c;$("asub").textContent=c?"Já tenho conta":"Criar conta";$("abtn").textContent=c?"Criar conta":"Entrar";$("asenha").autocomplete=c?"new-password":"current-password";erro("")}
 function mostrarPlano(){var n=(USER.nome||"").split(" ")[0];$("pnome").textContent=n?", "+n:"";$("perr").textContent="";$("assinar").textContent="Assinar por "+prec()+" por mês";vista("plano");gate(true)}
-function conta(){$("conta").innerHTML='<div class="ln"><div class="g"><b>'+esc(USER.nome||"Minha conta")+'</b><small>'+esc(USER.email)+'</small></div></div><div class="ln"><div class="g"><b>'+CFG.NOME+'</b><small>'+prec()+' por mês</small></div><span class="tag">Ativa</span></div><div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 0"><button class="ghost" data-k="g">Gerenciar assinatura</button><button class="ghost" data-k="s">Sair</button></div>'}
+function conta(){$("conta").innerHTML='<div class="ln"><div class="g"><b>'+esc(USER.nome||"Minha conta")+'</b><small>'+esc(USER.email)+'</small></div></div><div class="ln"><div class="g"><b>'+CFG.NOME+'</b><small>'+prec()+' por mês</small></div><span class="tag">Ativa</span></div><div style="display:flex;gap:8px;flex-wrap:wrap;padding:12px 0"><button class="ghost" data-k="g">Gerenciar assinatura</button><button class="ghost" data-k="p">Alterar senha</button><button class="ghost" data-k="s">Sair</button></div>'}
 async function abrirApp(){
 if(LIVE){try{var d=await API.carregar();if(d&&d.D&&d.P)lsSet("mare-d-"+UID,d)}catch(e){}}
 try{if(location.hash==="#assinatura-ok")history.replaceState(null,"",location.pathname+location.search)}catch(e){}
@@ -489,13 +505,25 @@ $("assinar").onclick=async function(){var b=this;b.disabled=true;b.textContent="
 try{if(await API.assinar()){abrirApp();toast("Assinatura ativada")}}catch(x){$("perr").textContent=x.message||"Algo deu errado."}
 b.disabled=false;b.textContent="Assinar por "+prec()+" por mês"};
 $("psair").onclick=async function(){await API.sair();USER=null;UID="local";vista("welcome")};
+function nerro(t){$("nerr").textContent=t}
+$("nvolta").onclick=async function(){nerro("");if(REC){await API.sair();USER=null;UID="local";REC=false;vista("welcome")}else gate(false)};
+$("nform").onsubmit=async function(e){e.preventDefault();var a=$("nsenha").value,c=$("nsenha2").value,b=$("nbtn");
+if(a.length<6)return nerro("A senha precisa ter pelo menos 6 caracteres.");
+if(a!==c)return nerro("As senhas não são iguais.");
+nerro("");b.disabled=true;b.textContent="Aguarde...";
+try{await API.trocarSenha(a);var rec=REC;REC=false;$("nsenha").value="";$("nsenha2").value="";try{history.replaceState(null,"",location.pathname+location.search)}catch(x){}toast("Senha alterada");if(rec)await depois(USER);else gate(false)}
+catch(x){nerro(traduz(x.message))}
+b.disabled=false;b.textContent="Salvar nova senha"};
 $("conta").onclick=async function(e){var b=e.target.closest("button");if(!b)return;
+if(b.dataset.k==="p"){vista("nova");gate(true);return}
 if(b.dataset.k==="s"){await API.sair();USER=null;UID="local";vista("welcome");gate(true);return}
 try{if(await API.gerenciar()==="demo"){toast("Assinatura cancelada");mostrarPlano()}}catch(x){toast("Não foi possível abrir o portal")}}}
 async function boot(){
 document.body.classList.toggle("live",LIVE);ligarGate();
+if(LIVE)sb.auth.onAuthStateChange(function(ev,ses){if(ev==="PASSWORD_RECOVERY"&&ses){REC=true;USER={id:ses.user.id,email:ses.user.email,nome:nm(ses.user)};UID=USER.id;vista("nova");gate(true)}});
 var u=null;try{u=await API.sessao()}catch(e){}
-if(!u){vista("welcome");return}
+if(!u){if(/otp_expired|access_denied/.test(location.hash)){modo("entrar");vista("auth");erro("O link expirou ou já foi usado. Toque em Esqueci minha senha para pedir outro.");return}vista("welcome");return}
+if(REC){USER=u;UID=u.id;vista("nova");gate(true);return}
 USER=u;UID=u.id;var ok=false;try{ok=await API.assinatura()}catch(e){}
 if(!ok&&location.hash==="#assinatura-ok"){for(var i=0;i<5&&!ok;i++){await new Promise(function(r){setTimeout(r,2000)});try{ok=await API.assinatura()}catch(e){}}}
 if(ok)abrirApp();else mostrarPlano()}
