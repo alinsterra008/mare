@@ -421,10 +421,10 @@ assinatura:async function(){
 if(LIVE){var r=await sb.from("assinaturas").select("status").eq("user_id",USER.id).maybeSingle(),s=r.data&&r.data.status;return s==="active"||s==="trialing"}
 var c=lsGet("mare-contas")||{};return!!(c[USER.email]&&c[USER.email].pro)},
 assinar:async function(){
-if(LIVE){var r=await sb.functions.invoke("billing",{body:{acao:"checkout",volta:location.href.split("#")[0]}});if(r.error||!r.data||!r.data.url)throw new Error("Não foi possível abrir o pagamento.");location.href=r.data.url;return false}
+if(LIVE){var r=await sb.functions.invoke("smart-function",{body:{acao:"checkout",volta:location.href.split("#")[0]}});if(r.error||!r.data||!r.data.url)throw new Error("Não foi possível abrir o pagamento.");location.href=r.data.url;return false}
 var c=lsGet("mare-contas")||{};c[USER.email].pro=true;lsSet("mare-contas",c);return true},
 gerenciar:async function(){
-if(LIVE){var r=await sb.functions.invoke("billing",{body:{acao:"portal",volta:location.href.split("#")[0]}});if(r.error||!r.data||!r.data.url)throw new Error("portal");location.href=r.data.url;return"live"}
+if(LIVE){var r=await sb.functions.invoke("smart-function",{body:{acao:"portal",volta:location.href.split("#")[0]}});if(r.error||!r.data||!r.data.url)throw new Error("portal");location.href=r.data.url;return"live"}
 var c=lsGet("mare-contas")||{};c[USER.email].pro=false;lsSet("mare-contas",c);return"demo"},
 carregar:async function(){if(!LIVE)return null;var r=await sb.from("dashboards").select("dados").eq("user_id",USER.id).maybeSingle();return r.data&&r.data.dados},
 salvar:async function(d){if(LIVE)await sb.from("dashboards").upsert({user_id:USER.id,dados:d})}
