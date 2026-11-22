@@ -176,6 +176,27 @@ body.live #reset{display:none}
 #conta{background:var(--card);border-radius:24px;padding:4px 18px;box-shadow:var(--sh)}
 .rod{text-align:center;color:var(--mute);font-size:12px;font-weight:600;margin:36px 16px 0}
 #gate .rod{margin:0;padding:0 16px calc(28px + env(safe-area-inset-bottom,0px))}
+.cx{min-width:0}
+@media (max-width:380px){.strip b{font-size:25px}.wt{font-size:28px}.big{font-size:44px}.pv{font-size:40px}}
+@media (min-width:700px){.wrap{max-width:720px}}
+@media (min-width:900px){
+.page{margin-left:232px;padding-bottom:56px}
+.page .wrap{max-width:1080px;padding:0 36px}
+#p2 .wrap,#p3 .wrap,#p4 .wrap{max-width:800px}
+nav{left:0;top:0;bottom:0;width:232px;transform:none;padding:24px 12px;border-radius:0;border:0;border-right:1px solid var(--line);background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+nav::before{content:"Maré";display:block;font-family:Fraunces,Georgia,serif;font-weight:700;font-size:26px;padding:4px 14px 22px}
+nav div{display:flex;flex-direction:column;gap:4px;max-width:none}
+nav button{flex-direction:row;justify-content:flex-start;gap:12px;font-size:15px;padding:12px 14px;border-radius:14px}
+#p1 .hero{padding-bottom:76px}
+#p1 .hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);column-gap:48px;align-items:center}
+#p1 .brand{grid-column:1/-1}
+#p1 svg#chart{grid-column:2;grid-row:2/span 5}
+#p1 .rg{justify-self:start}
+#p1>.wrap{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;align-items:start}
+#strip,#alerts{grid-column:1/-1}
+#strip{margin-top:-46px}
+.toast{bottom:28px}
+}
 </style>
 </head>
 <body class="gated">
@@ -244,10 +265,10 @@ body.live #reset{display:none}
 </div></div>
 <div class="wrap">
 <div class="strip" id="strip"></div><div id="alerts"></div>
-<h2>Receita por plano</h2>
-<div class="stk" id="stk"></div><div id="pl"></div>
-<h2>Métricas</h2><div id="met"></div><h2>Novos clientes nos últimos 6 meses</h2><div class="bars" id="bars"></div><h2>Atividade recente</h2>
-<div id="ativ"></div>
+<div class="cx"><h2>Receita por plano</h2>
+<div class="stk" id="stk"></div><div id="pl"></div></div>
+<div class="cx"><h2>Métricas</h2><div id="met"></div></div><div class="cx"><h2>Novos clientes nos últimos 6 meses</h2><div class="bars" id="bars"></div></div><div class="cx"><h2>Atividade recente</h2>
+<div id="ativ"></div></div>
 </div>
 </section>
 
@@ -312,7 +333,7 @@ function quando(t){return t===0?"Este mês":t===1?"Mês passado":"Há "+t+" mese
 function chart(){
 var pts=[],i;for(i=N-1;i>=0;i--)pts.push({m:i,v:mrrAt(i)});
 if(SEL<0||SEL>=N)SEL=N-1;
-var max=Math.max.apply(null,pts.map(function(p){return p.v}))||1,W=340,H=170,B=24,T=36,L=6,R=6;
+var max=Math.max.apply(null,pts.map(function(p){return p.v}))||1,W=340,H=170,B=24,T=36,L=26,R=26;
 var X=function(k){return L+k*(W-L-R)/Math.max(1,N-1)},Y=function(v){return T+(H-T-B)*(1-v/(max*1.1))};
 var d="M"+X(0)+" "+Y(pts[0].v),k,mx;
 for(k=1;k<N;k++){mx=(X(k-1)+X(k))/2;d+=" C"+mx+" "+Y(pts[k-1].v)+" "+mx+" "+Y(pts[k].v)+" "+X(k)+" "+Y(pts[k].v)}
